@@ -1,0 +1,145 @@
+{
+	"NEWS_STORIES": {
+		"1": {
+			"title": "Test title 1",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Sat, 31 Oct 2020 05:37:06 GMT",
+			"isPublic": false
+		},
+		"3": {
+			"title": "Test Filter title 1",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Sun, 23 Aug 2020 07:00:00 GMT",
+			"isPublic": false
+		},
+		"4": {
+			"title": "Test Filter title 2",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Mon, 24 Aug 2020 07:00:00 GMT",
+			"isPublic": true
+		},
+		"5": {
+			"title": "Test Filter title 3",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Sun, 23 Aug 2020 07:00:00 GMT",
+			"isPublic": true
+		},
+		"6": {
+			"title": "Test title 1",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Sat, 31 Oct 2020 05:47:56 GMT",
+			"isPublic": false
+		},
+		"8": {
+			"title": "Test Filter title 1",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Sun, 23 Aug 2020 07:00:00 GMT",
+			"isPublic": false
+		},
+		"9": {
+			"title": "Test Filter title 2",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Mon, 24 Aug 2020 07:00:00 GMT",
+			"isPublic": true
+		},
+		"10": {
+			"title": "Test Filter title 3",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Sun, 23 Aug 2020 07:00:00 GMT",
+			"isPublic": true
+		},
+		"11": {
+			"title": "Test title 1",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Sat, 31 Oct 2020 05:48:41 GMT",
+			"isPublic": false
+		},
+		"13": {
+			"title": "Test Filter title 1",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Sun, 23 Aug 2020 07:00:00 GMT",
+			"isPublic": false
+		},
+		"14": {
+			"title": "Test Filter title 2",
+			"content": "Content for title 1",
+			"author": "Author1",
+			"date": "Mon, 24 Aug 2020 07:00:00 GMT",
+			"isPublic": true
+		},
+		"15": {
+			"title": "Test Filter title 3",
+			"content": "abc",
+			"author": "Author1",
+			"date": "Sun, 23 Aug 2020 07:00:00 GMT",
+			"isPublic": true
+		},
+		"17": {
+			"title": "Test2",
+			"content": "Test2",
+			"author": "Tester",
+			"date": "Mon, 16 Nov 2020 04:58:43 GMT",
+			"isPublic": true
+		},
+		"18": {
+			"title": "test3",
+			"content": "test3",
+			"author": "test3",
+			"date": "Mon, 16 Nov 2020 04:59:09 GMT",
+			"isPublic": true
+		},
+		"19": {
+			"title": "test5",
+			"content": "test5",
+			"author": "test5",
+			"date": "Mon, 16 Nov 2020 04:59:26 GMT",
+			"isPublic": true
+		},
+		"20": {
+			"title": "qwe",
+			"content": "test51",
+			"author": "test5",
+			"date": "Mon, 16 Nov 2020 04:59:37 GMT",
+			"isPublic": false
+		},
+		"21": {
+			"title": "testtt",
+			"content": "testtt",
+			"author": "testing",
+			"date": "Mon, 16 Nov 2020 05:00:50 GMT",
+			"isPublic": false
+		},
+		"22": {
+			"title": "Working",
+			"content": "Working",
+			"author": "w",
+			"date": "Mon, 16 Nov 2020 05:10:17 GMT",
+			"isPublic": false
+		},
+		"23": {
+			"title": "x",
+			"content": "y",
+			"author": "w",
+			"date": "Fri, 13 Nov 2020 11:55:14 GMT",
+			"isPublic": false
+		},
+		"24": {
+			"title": "qwert",
+			"content": "qewrtyu",
+			"author": "w",
+			"date": "Mon, 16 Nov 2020 05:20:20 GMT",
+			"isPublic": true
+		}
+	},
+	"LATEST_ID": 25
+}

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>
+                Login
+            </title>
+        </head>
+        
+        <body>
+            <div id='showError'></div>
+            <div id="loginPage">
+            <h2>Login Page</h2>
+                <form>
+                    <div>
+                        <label for="username">User Name:</label><br>
+                        <input type="text" id="username" name="username" placeholder="Username" required><br><br>
+                    </div>
+                    <div>
+                        <label for="passwrod">Password:</label><br>
+                        <input type="text" id="password" name="password" placeholder="Password" required><br><br>
+                    </div>
+                    <div>
+                        <label for="role">Select your role:</label>
+                            <input type="radio" name="role" value="guest">
+                            <label for="guest">Guest</label>
+                            <input type="radio" name="role" value="author">
+                            <label for="author">Author</label>
+                            <input type="radio" name="role" value="subscriber">
+                            <label for="subscriber">Subscriber</label>         
+                    </div>
+                    <br><br>
+                    
+                </form>
+                <input id="login" type="submit" value="Submit">  
+            </div> 
+            <div id="viewNews"></div>
+            <div id="DisplayStory"></div>
+            <div id="displayCreateFrom"></div>
+            <div id="displayStoryLink"></div>
+            <div id="displayChanges"></div>
+            <div id="displayNewStory"></div>
+        </body>
+        <script>
+            // let showError = document.getElementById('showError').innerHTML;
+            // let loginPage = document.getElementById('loginPage').innerHTML
+            // let viewNews = document.getElementById('viewNews').innerHTML
+            // let displayStory = document.getElementById('DisplayStory').innerHTML
+            // let displayCreateForm = document.getElementById('displayCreateFrom').innerHTML
+            // let displayNewStory = document.getElementById('displayNewStory').innerHTML
+            // if(showError == "" && loginPage == "" && viewNews == "" && displayStory == "" && displayCreateForm == "" && displayNewStory == "") {
+            //     console.log('YIP')
+            // }
+
+            document.getElementById('showError').innerHTML
+            document.getElementById('loginPage').innerHTML
+            document.getElementById('viewNews').innerHTML
+
+            // Where Create form is shown
+            document.getElementById('displayCreateFrom').innerHTML
+            document.getElementById('displayStoryLink').innerHTML
+            document.getElementById('displayChanges').innerHTML
+            document.getElementById('displayNewStory').innerHTML
+            
+            // On Click of submit button in LOGIN page
+            document.getElementById('login').addEventListener('click', function login(){
+                let radio = document.forms[0].elements
+                let value;
+                for(let i = 2; i<5;i++) {
+                    if(radio[i].checked) {
+                        value = radio[i].value;
+                    }
+                }
+                
+                // Send Form Data
+                const toSend = {
+                    username: document.forms[0].elements[0].value,
+                    password: document.forms[0].elements[1].value,
+                    role: value
+                }
+
+                // FETCH /LOGIN ENDPOINT which returns viewNews page
+                fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(toSend),
+                })
+                .then(function (res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('loginPage').innerHTML = '';
+                    document.getElementById('viewNews').innerHTML = data;                  
+                }) 
+                .catch(err => console.log(err))             
+            })
+
+            // Called when Create From Button is Clicked
+            function createStoryCall() {
+                // FETCH call whill return the CREATE STORY FORM
+                fetch('http://localhost:3000/createStoryForm')
+                .then(function (res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('loginPage').innerHTML = '';
+                    document.getElementById('viewNews').innerHTML = '';
+                    document.getElementById('displayCreateFrom').innerHTML = data;
+                })
+                .catch(err => console.log(err))
+            }
+
+            // Called When Submitting CREATE STORY FORM
+            function createStoryFromSubmit() {
+                let formElements = document.forms[0].elements
+
+                for(let i = 1; i<3;i++) {
+                    if(formElements[i].checked) {
+                        value = (formElements[i].value == 'true');
+                    }
+                }
+
+                const toSend = {
+                    title: formElements[0].value,
+                    content: formElements[3].value,
+                    isPublic: value
+                }
+
+                // Fetch call to Process the Create Story From Data
+                fetch('http://localhost:3000/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(toSend)
+                })
+                .then(function(res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('displayNewStory').innerHTML = data;
+                })
+                .catch(err => console.log(err))
+
+                // Fetch call to show the viewNews_author Page again
+                fetch('http://localhost:3000/viewNews_author')
+                .then(function(res) {
+                    return res.text();
+                })
+                .then(function(data) {
+                    document.getElementById('loginPage').innerHTML = '';
+                    document.getElementById('viewNews').innerHTML = data;
+                    document.getElementById('displayCreateFrom').innerHTML = "";
+                    document.getElementById('displayChanges').innerHTML = '';
+                })
+                .catch(err => console.log(err))
+            }
+
+            // Called When Delete Story is clicked
+            function deleteStoryCall(x) {
+                let toSend = {
+                    id: x
+                }
+                // FETCH contacts Delete Endpoint URL
+                fetch('http://localhost:3000/delete', {
+                    method: 'DELETE',
+                    headers: { 
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(toSend)
+                })
+                .then(function(res) {
+                    return res.text();
+                })
+                .then(function(data) {
+                    document.getElementById('displayChanges').innerHTML = `<h3>${data}</h3>`;
+                })
+                .catch(err => console.log(err))
+            }
+
+            // Called When LOGOUT is clicked
+            function deleteKey() {
+                // Fetch calls ENDPOINT USL that invalidates the key
+                fetch('http://localhost:3000/removeKey')
+                .then(function(res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    window.location.replace('http://localhost:3000');
+                })
+                .catch(err => console.log(err))
+            }
+        
+            // Called when you click CANCEL in create story form
+            function cancelCreate() {
+                // Recalling viewNewsAuthor data using fetch
+                fetch('http://localhost:3000/viewNews_author')
+                .then(function(res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('displayCreateFrom').innerHTML = ''
+                    document.getElementById('viewNews').innerHTML = data
+                    document.getElementById('displayChanges').innerHTML = '<h3>Create Story Cancelled</h3>';
+                })
+                .catch(err => console.log(err)) 
+            }
+        
+            // Called when you EDIT TITLE as a author
+            function editTitleCall(x) {
+                let toSend = {
+                    val: x
+                }
+                // Fetch contacts title editing from
+                fetch('http://localhost:3000/titleCall', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(toSend)
+                })
+                .then(function (res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('displayChanges').innerHTML = data
+                })
+            }
+
+            // Called to UPDATE TITLE
+            function saveTitle(x) {
+                let toSend = {
+                    id: x,
+                    title: document.forms[0].elements[0].value
+                }
+                // Send data through fetch to /editTitle ENDPOINT
+                fetch('http://localhost:3000/editTitle', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(toSend)
+                })
+                .then(function (res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('displayChanges').innerHTML = data
+                })
+            }
+
+            // Called when you EDIT CONTENT as a authoe
+            function editContentCall(x) {
+                let toSend = {
+                    val: x
+                }
+                // Fetch call to display Content Edit Form
+                fetch('http://localhost:3000/contentCall', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(toSend)
+                })
+                .then(function (res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('displayChanges').innerHTML = data
+                })
+            }
+
+            // Called to UPDATE CONTENT
+            function saveContent(x) {
+                let toSend = {
+                    id: x,
+                    content: document.forms[0].elements[0].value
+                }
+                // Send data through fetch to /editContentENDPOINT
+                fetch('http://localhost:3000/editContent', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(toSend)
+                })
+                .then(function (res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('displayChanges').innerHTML = data
+                })
+            }
+
+            // Called when hyperlink to stories is pressed
+            function viewNews_link(x) {
+                let toSend ={
+                    val: x
+                }
+                // Get data to display through FETCH
+                console.log(toSend);
+                fetch('http://localhost:3000/viewNews_link', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(toSend)
+                })
+                .then(res => res.text())
+                .then(function(data) {
+                    document.getElementById('displayChanges').innerHTML = data;
+                })
+
+            }
+      
+            // Called when cancel button is clicked on EDIT CONTENT FORM
+            function cancelSaveContent() {
+                // Display viewNewsAuthor Content
+                fetch('http://localhost:3000/viewNews_author')
+                .then(function(res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('displayCreateFrom').innerHTML = ''
+                    document.getElementById('viewNews').innerHTML = data;
+                    document.getElementById('showError').innerHTML = '';
+                    document.getElementById('displayChanges').innerHTML = '<h3>Update Content Cancelled</h3>';
+                })
+                .catch(err => console.log(err)) 
+            }
+
+            // Called when cancel button is clicked on EDIT CONTENT FORM
+            function cancelSaveTitle() {
+                // Display viewNewsAuthor Content
+                fetch('http://localhost:3000/viewNews_author')
+                .then(function(res) {
+                    return res.text()
+                })
+                .then(function(data) {
+                    document.getElementById('displayCreateFrom').innerHTML = ''
+                    document.getElementById('showError').innerHTML = ''
+                    document.getElementById('viewNews').innerHTML = data
+                    document.getElementById('displayChanges').innerHTML = '<h3>Update Title Cancelled</h3>';
+                })
+                .catch(err => console.log(err)) 
+            }
+        </script>
+    </html>
